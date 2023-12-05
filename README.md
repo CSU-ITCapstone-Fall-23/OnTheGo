@@ -39,9 +39,9 @@ For deploying this application, we recommend using Render.
 Render offers seamless hosting services suitable for Flask applications. Follow their documentation for detailed deployment instructions.
 
 # Built With
--Flask: A lightweight WSGI web application framework.
--Python: The programming language used.
--SQLite: A self-contained, high-reliability, embedded, SQL database engine.
+- Flask: A lightweight WSGI web application framework.
+- Python: The programming language used.
+- SQLite: A self-contained, high-reliability, embedded, SQL database engine.
 
 # Contributing
 We welcome contributions from various sources, including booking.com, which provides valuable data for our hotel booking feature.
@@ -52,9 +52,9 @@ We use GitHub for version control. To see the versions available, refer to the t
 # Authors
 - Terence Jones
 - Kiana Salter
-Acknowledgments
--Our Suggestion webpage API is limited to 10 requests per day. Therefore, you can run the Suggestion webpage only 4-5 times daily.
--Special thanks to all contributors and testers who have helped shape and improve this application.
--Gratitude to open-source projects and libraries that made this app possible.
--For more information or assistance, please contact the development team at OnTheGo Support.
+- Acknowledgments
+- Our Suggestion webpage API is limited to 10 requests per day. Therefore, you can run the Suggestion webpage only 4-5 times daily.
+- Special thanks to all contributors and testers who have helped shape and improve this application.
+- Gratitude to open-source projects and libraries that made this app possible.
+- For more information or assistance, please contact the development team at OnTheGo Support.
 

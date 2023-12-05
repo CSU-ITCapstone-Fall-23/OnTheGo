@@ -37,7 +37,7 @@ flask run
 # Deployment
 For deploying this application, we recommend using Render.
 - https://onthegoapp.onrender.com 
-Render offers seamless hosting services suitable for Flask applications. Follow their documentation for detailed deployment instructions.
+- Render offers seamless hosting services suitable for Flask applications. Follow their documentation for detailed deployment instructions.
 
 # Built With
 - Flask: A lightweight WSGI web application framework.

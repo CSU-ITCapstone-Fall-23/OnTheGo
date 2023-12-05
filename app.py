@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import requests
 import os
 import asyncio
@@ -8,13 +8,6 @@ import json
 
 app = Flask(__name__)
 
-hotels_data = [
-    {"name": "Hotel A", "location": "City A"},
-    {"name": "Hotel B", "location": "City B"},
-    {"name": "Hotel C", "location": "City C"},
-    # Add more hotel data as needed
-]
-
 # Home route
 @app.route("/")                   
 def home():
@@ -22,23 +15,29 @@ def home():
 
 
 # Booking route
-@app.route("/booking")                   
+@app.route("/booking", methods=['GET', 'POST'])
 def booking():
-    url = 'https://best-booking-com-hotel.p.rapidapi.com/booking/best-accommodation'
-    querystring = {"cityName":"Berlin", "countryName":"Germany"}
+    if request.method == 'POST':
+        cityName = request.form.get('cityName')
+        countryName = request.form.get('countryName')
 
-    headers = {
-        "X-RapidAPI-Key": "68bb373953mshbd91a0f0832fa34p15047cjsnb7984d237ebc",
-        "X-RapidAPI-Host": "best-booking-com-hotel.p.rapidapi.com"
-    }
+        # Fetch data from the API using user input
+        url = 'https://best-booking-com-hotel.p.rapidapi.com/booking/best-accommodation'
+        querystring = {"cityName": cityName, "countryName": countryName}
 
-    try:
+        headers = {
+            "X-RapidAPI-Key": "aa25bc40cfmshcf78ffdb3d74cd4p1af2f5jsn7e50f017bcd3",
+            "X-RapidAPI-Host": "best-booking-com-hotel.p.rapidapi.com"
+        }
+
         response = requests.get(url, headers=headers, params=querystring)
-        response.raise_for_status()
         data = response.json()
+
+        # Render the template with the API data
         return render_template("booking.html", datum=data)
-    except requests.exceptions.RequestException as e:
-        return f"An error occurred: {e}"
+
+    # If it's a GET request or any other case, render the form
+    return render_template("booking.html", datum=None)
 
 
 
@@ -67,32 +66,6 @@ def end():
         all_data.append(data)
 
     return render_template("suggestions.html", datum=all_data)  
-
-
-# Get hotels route (if needed)
-@app.route("/get_hotels")                   
-def get_hotels():
-    url = "https://apidojo-booking-v1.p.rapidapi.com/currency/get-exchange-rates?rapidapi-key=ff511b0e11msh532c009df749b7fp1c32f0jsncc64d31ee82a"
-    querystring = {"cityName": "Berlin", "countryName": "Germany"}
-
-    headers = {
-         "X-RapidAPI-Key": "ff511b0e11msh532c009df749b7fp1c32f0jsncc64d31ee82a",
-         "X-RapidAPI-Host": "apidojo-booking-v1.p.rapidapi.com"
-    }
-
-    try:
-        response = requests.get(url, headers=headers, params=querystring)
-        response.raise_for_status()  # Raise an HTTPError for bad requests (4xx and 5xx status codes)
-        hotels_data = response.json().get("data", [])
-        return render_template("hotels.html", hotels=hotels_data)
-    except requests.exceptions.HTTPError as errh:
-        return f"HTTP Error: {errh}"
-    except requests.exceptions.ConnectionError as errc:
-        return f"Error Connecting: {errc}"
-    except requests.exceptions.Timeout as errt:
-        return f"Timeout Error: {errt}"
-    except requests.exceptions.RequestException as err:
-        return f"Something went wrong: {err}"
 
 if __name__ == "__main__":
     app.run(debug=True)
